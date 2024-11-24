@@ -1,0 +1,20 @@
+- template:
+    name: corewizard-generic-host 
+    check_period: 24x7                    
+    check_interval: 4                       
+    retry_interval: 2                       
+    max_check_attempts: 4        
+    notification_period: 24x7
+    notification_interval: 60                     
+    notification_options: u,d,r                   
+    contact_groups: admins                   
+    notifications_enabled: 1                       
+    event_handler_enabled: 1                       
+    flap_detection_enabled: 0                       
+    process_perf_data: 1                        
+    retain_status_information: 1                        
+    retain_nonstatus_information: 1                        
+    notification_period: 24x7 
+    register: 0
+    notes: corewizard generated
+    _wizard: corewizard

@@ -1,0 +1,38 @@
+- linux:
+    
+    host:
+      hostgroups: linux-servers
+      check_command: check_host_alive
+      notifications_enabled: 1
+      action_url: action_url   
+    
+    services:
+      cpu:
+        service_description: CPU Utilization
+        command: 'check_ncpa <service string>!<arg1>!<arg2>!<arg3>!<srg4>!<arg5>!<arg7>!<arg8>!'
+        notifications_enabled: 1
+        action_url: 'http://localhost:9090/classic/graph?g0.range_input=1h&g0.expr=$HOSTNAME$_cpu_utilization&g0.tab=0'
+
+      mem:
+        service_description: Memory Utilization
+        command: 'check_ncpa <service string>!<arg1>!<arg2>!<arg3>!<srg4>!<arg5>!<arg7>!<arg8>!'
+        notifications_enabled: 1
+        action_url: 'http://localhost:9090/classic/graph?g0.range_input=1h&g0.expr=$HOSTNAME$_memory_utilization&g0.tab=0'
+
+      disk:
+        service_description: Disk Usage /
+        command: 'check_ncpa <service string>!<arg1>!<arg2>!<arg3>!<srg4>!<arg5>!<arg7>!<arg8>!'
+        notifications_enabled: 1
+        action_url: 'http://localhost:9090/classic/graph?g0.range_input=1h&g0.expr=$HOSTNAME$_disk_usage&g0.tab=0'
+
+      proc:
+        service_description: Total Processes
+        command: 'check_ncpa <service string>!<arg1>!<arg2>!<arg3>!<srg4>!<arg5>!<arg7>!<arg8>!'
+        notifications_enabled: 1
+        action_url: 'http://localhost:9090/classic/graph?g0.range_input=1h&g0.expr=$HOSTNAME$_total_processes&g0.tab=0'
+
+      user:
+        service_description: User Count
+        command: 'check_ncpa <service string>!<arg1>!<arg2>!<arg3>!<srg4>!<arg5>!<arg7>!<arg8>!'
+        notifications_enabled: 1
+        action_url: 'http://localhost:9090/classic/graph?g0.range_input=1h&g0.expr=$HOSTNAME$_user_count&g0.tab=0'
