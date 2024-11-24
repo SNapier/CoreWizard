@@ -1,0 +1,29 @@
+##########################################
+# COREWIZARD-HOST V:0.0.1                #
+# COREWIZARD-GENERIC-HOST-TEMPLATE       #
+##########################################
+
+#BEGIN TEMPLATE DEFINITION
+
+define host {
+
+    name                            corewizard-generic-host 
+    check_period                    {{ check_period }}                    
+    check_interval                  {{ check_interval }}                       
+    retry_interval                  {{ retry_interval }}                       
+    max_check_attempts              {{ max_check_attempts }}        
+    notification_period             {{ notification_period }}
+    notification_interval           {{ notification_interval }}                     
+    notification_options            {{ notification_options }}                   
+    contact_groups                  {{ contact_groups }}                   
+    notifications_enabled           {{ notifications_enabled }}                       
+    event_handler_enabled           {{ event_handler_enabled }}                       
+    flap_detection_enabled          {{ flap_detection_enabled }}                       
+    process_perf_data               {{ process_perf_data }}                        
+    retain_status_information       {{ retain_status_information }}                        
+    retain_nonstatus_information    {{ retain_nonstatus_information }}                        
+    notification_period             {{ notification_period }}                    
+    register                        {{ register }}                       
+}
+
+#END TEMPLATE DEFINITION

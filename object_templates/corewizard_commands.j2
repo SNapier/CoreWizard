@@ -1,0 +1,15 @@
+##########################################
+# COREWIZARD-COMMANDS V:0.0.1            #
+# COREWIZARD-SERVICE-CHECK-COMMANDS      #
+##########################################
+
+#BEGIN COREWIZARD COMMANDS DEFINITIONS
+
+{% for i in cmd %}
+    define command {
+        command_name    {{ cmd[i].command_name }}
+        command_line    {{ cmd[i].command_line }}
+    }
+{% endfor %}
+
+#END COREWIZARD COMMANDS DEFINITIONS

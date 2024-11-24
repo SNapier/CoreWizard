@@ -1,0 +1,25 @@
+##########################################
+# CORE_MONITORING_WIZARD (NCPA) V:0.0.1  #
+# AUTOMATICALLY GENERATED DO NOT EDIT    #
+##########################################
+
+#HOST DEFINITION
+define  host{
+    use             corewizard-generic-host
+    host_name       {{ host.host_name }} 
+    alias           
+    address         {{ host.address }}
+    check_command   {{ host.check_command }}
+    hostgroups      {{ host.hostgroups }}
+    action_url      {{ host.action_url }}
+}
+
+#BEGIN NCPA SERVICE/S DEFINITION
+{% for service in services %}    
+    define service {
+        use                 corewizard-generic-service
+        description         {{ services[service].service_description }}
+        command             {{ services[service].command }}
+        action_url          {{ services[service].action_url }}
+{% endfor %}
+#END NCPA SERVICE/S DEFINITIONS
