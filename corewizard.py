@@ -12,7 +12,7 @@ USER-Count
 '''
 
 cname = "corewizard"
-cversion = "0.0.1"
+cversion = "0.0.2"
 appPath = os.path.dirname(os.path.realpath(__file__))
 
 #GENERATE COREWIZARD TEMPLATES
@@ -89,8 +89,7 @@ def generateNagiosCommands(appPath,template):
 #GENERATE NAGIOS OBJECT CONFIGS
 def generateNagiosCfg(appPath,meta,nhd):
     
-    #TEMPLATE DATA
-    tempdata = {}
+    #CORWIZARD OBJECTS TEMPLATE
     tyml = "{}\\object_yml\\corewizard-objects.yml".format(appPath)
     
     #COREWIZARD JINJA TEMPLATE LOCATION
@@ -118,20 +117,17 @@ def generateNagiosCfg(appPath,meta,nhd):
     #GET NAGIOS FILE CONTENT FROM CORE WIZARD TEMPLATE YAML 
     with open(tyml, 'r') as f:
         data_loaded = yaml.safe_load(f)
+
+        #GET REQUIRED FIELDS FROM YML
+        for item in data_loaded[0][meta.ostype.lower()]["host"]:
+            cfg["host"][item] = data_loaded[0][meta.ostype.lower()]["host"][item]
         
-        cfg["host"]["check_command"] = data_loaded[0][meta.ostype.lower()]["host"]["check_command"]
-        cfg["host"]["hostgroups"] = data_loaded[0][meta.ostype.lower()]["host"]["hostgroups"]
-        cfg["host"]["notifications_enabled"] = data_loaded[0][meta.ostype.lower()]["host"]["notifications_enabled"]
-        cfg["host"]["action_url"] = data_loaded[0][meta.ostype.lower()]["host"]["action_url"]
-        cfg["services"]["cpu"] = data_loaded[0][meta.ostype.lower()]["services"]["cpu"]
-        cfg["services"]["mem"] = data_loaded[0][meta.ostype.lower()]["services"]["mem"]
-        cfg["services"]["disk"] = data_loaded[0][meta.ostype.lower()]["services"]["disk"]
-        cfg["services"]["proc"] = data_loaded[0][meta.ostype.lower()]["services"]["proc"]
-        cfg["services"]["user"] = data_loaded[0][meta.ostype.lower()]["services"]["user"]
+        #GET ALL LINUX SERVICES DEFINED FOR THE TYPE IN THE YML
+        for service in data_loaded[0][meta.ostype.lower()]["services"]:
+            cfg["services"][service] = data_loaded[0][meta.ostype.lower()]["services"][service]
     
     #RENDER TEMPLATE
     rendered = temp.render(cfg)
-    #print(rendered)
 
     #NAGFILE
     nagfile = "{}.cfg".format(nhd[0])
@@ -141,7 +137,6 @@ def generateNagiosCfg(appPath,meta,nhd):
         f.write(rendered)
         f.flush()
         f.close()
-
 
 #MAIN
 if __name__ == "__main__" :
@@ -171,13 +166,6 @@ if __name__ == "__main__" :
         choices=["linux","windows"],
         help="String(OSType): The target host operating system type."
     ),
-    #LIST OF SERVICES TO DEPLOY TO THE TARGET
-    args.add_argument(
-        "-s","--services",
-        required=False,
-        default=None,
-        help="String(cpu,mem,disk,user): Comma speperated list of services to deploy to the target."
-    ),
     #OVERWRITE
     args.add_argument(
         "-o","--overwrite",
@@ -204,8 +192,6 @@ if __name__ == "__main__" :
         #GENERATE ALL NEEDED TEMPLATES
         for template in templates:
 
-            #TODO NAGIOS OBJECT PATH FROM YML
-            tpath = "{}\\{}.cfg".format(appPath,template)
             # CLOBBER
             if meta.overwrite:
                 print("OVERWRITING EXISTING {} TEMPLATE".format(template.upper()))
@@ -213,10 +199,14 @@ if __name__ == "__main__" :
             
             #GUARD
             else:
+                #TODO NAGIOS OBJECT PATH FROM YML
+                tpath = "{}\\{}.cfg".format(appPath,template)
+                
                 #CHECK FILE EXISTS
                 if os.path.exists(tpath):
                     print("Error: FILE {} ALREADY EXISTS, EXITING.".format(tpath))
                     sys.exit()
+                
                 #NEW FILE
                 else:
                     print("GENERATING {} TEMPLATE".format(template.upper()))
@@ -231,8 +221,6 @@ if __name__ == "__main__" :
         #GENERATE ALL NEEDED TEMPLATES
         for template in templates:
 
-            #TODO NAGIOS OBJECT PATH FROM YML
-            tpath = "{}\\{}.cfg".format(appPath,template)
             # CLOBBER
             if meta.overwrite:
                 print("OVERWRITING EXISTING {}".format(template.upper()))
@@ -240,6 +228,10 @@ if __name__ == "__main__" :
             
             #GUARD
             else:
+                
+                #TODO NAGIOS OBJECT PATH FROM YML
+                tpath = "{}\\{}.cfg".format(appPath,template)
+                
                 #CHECK FILE EXISTS
                 if os.path.exists(tpath):
                     print("Error: FILE {} ALREADY EXISTS, EXITING.".format(tpath))
@@ -249,6 +241,7 @@ if __name__ == "__main__" :
                     print("GENERATING {} ".format(template.upper()))
                     generateNagiosCommands(appPath,template)
 
+    
     #CREATE MONITORING OBJECT CONFIG FILES
     elif meta.action.lower() == "monitor":
         
@@ -260,20 +253,25 @@ if __name__ == "__main__" :
             
             #CHECK TO SEE IF SPLIT ADDRESS
             nhd = i.split(":")
-            
-            #THIS WILL BE NAGIOS WORKING DIRECTORY
-            cfgpath = "{}\\{}.cfg".format(appPath,nhd[0])
-            
+        
             # CLOBBER
             if meta.overwrite:
                 print("OVERWRITING {}.cfg ".format(nhd[0]))
                 generateNagiosCfg(appPath,meta,nhd)
+            
             #GUARD
             else:
+                
+                #THIS WILL BE NAGIOS WORKING DIRECTORY
+                cfgpath = "{}\\{}.cfg".format(appPath,nhd[0])
+                
                 if os.path.exists(cfgpath):
                     print("SKIPPED: \"{}\" File Exists.".format(cfgpath))
                 else:
                     print("GENERATING {}.cfg".format(nhd[0]))
                     generateNagiosCfg(appPath,meta,nhd)
+    
+    #UNKNOWN COMMAND
     else:
         print("THESE ARE NOT THE DROIDS YOU ARE LOOKING FOR!")
+        sys.exit()
