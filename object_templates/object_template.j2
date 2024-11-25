@@ -1,13 +1,12 @@
 ##########################################
-# CORE_MONITORING_WIZARD (NCPA) V:0.0.1  #
+# CORE_MONITORING_WIZARD (NCPA) V:0.0.2  #
 # AUTOMATICALLY GENERATED DO NOT EDIT    #
 ##########################################
 
 #HOST DEFINITION
 define  host{
     use             corewizard-generic-host
-    host_name       {{ host.host_name }} 
-    alias           
+    host_name       {{ host.host_name }}
     address         {{ host.address }}
     check_command   {{ host.check_command }}
     hostgroups      {{ host.hostgroups }}
