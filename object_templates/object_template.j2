@@ -1,5 +1,5 @@
 ##########################################
-# CORE_MONITORING_WIZARD (NCPA) V:0.0.3  #
+# COReWIZARD-TEMPLATES V:{{ version }}             #
 # AUTOMATICALLY GENERATED DO NOT EDIT    #
 ##########################################
 
@@ -20,5 +20,7 @@ define  host{
         description         {{ services[service].service_description }}
         command             {{ services[service].command }}
         action_url          {{ services[service].action_url }}
+    }
+
 {% endfor %}
 #END NCPA SERVICE/S DEFINITIONS
