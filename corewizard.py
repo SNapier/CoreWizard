@@ -12,7 +12,7 @@ USER-Count
 '''
 
 cname = "corewizard"
-cversion = "0.0.2"
+cversion = "0.0.3"
 appPath = os.path.dirname(os.path.realpath(__file__))
 
 #GENERATE COREWIZARD TEMPLATES
@@ -22,11 +22,11 @@ def generateNagiosTemplate(appPath,template):
     tempdata = {}
 
     #COREWIZARD TEMPLATE YAML
-    tyml = "{}\\object_yml\\{}.yml".format(appPath,template)
+    tyml = "{}/object_yml/{}.yml".format(appPath,template)
     
     #COREWIZARD JINJA TEMPLATE LOCATION
     #TODO SET APP PATH FOR TEMPLATES
-    env = Environment(loader=FileSystemLoader(appPath+"\\object_templates\\"))
+    env = Environment(loader=FileSystemLoader(appPath+"/object_templates/"))
     
     #COREWIZARD NAGIOS FILE TEMPLATE TO PROCESS
     tempj2 = "{}.j2".format(template)
@@ -58,11 +58,11 @@ def generateNagiosCommands(appPath,template):
     commands["cmd"] = {}
 
     #COREWIZARD TEMPLATE YAML
-    tyml = "{}\\object_yml\\{}.yml".format(appPath,template)
+    tyml = "{}/object_yml/{}.yml".format(appPath,template)
     
     #COREWIZARD JINJA TEMPLATE LOCATION
     #TODO SET APP PATH FOR TEMPLATE
-    env = Environment(loader=FileSystemLoader(appPath+"\\object_templates\\"))
+    env = Environment(loader=FileSystemLoader(appPath+"/object_templates/"))
     
     #COREWIZARD NAGIOS FILE TEMPLATE TO PROCESS
     #TODO CHANGE NAME TO *.J2 ONLY
@@ -90,11 +90,11 @@ def generateNagiosCommands(appPath,template):
 def generateNagiosCfg(appPath,meta,nhd):
     
     #CORWIZARD OBJECTS TEMPLATE
-    tyml = "{}\\object_yml\\corewizard-objects.yml".format(appPath)
+    tyml = "{}/object_yml/corewizard-objects.yml".format(appPath)
     
     #COREWIZARD JINJA TEMPLATE LOCATION
     #TODO SET APP PATH FOR TEMPLATES
-    env = Environment(loader=FileSystemLoader(appPath+"\\object_templates\\"))
+    env = Environment(loader=FileSystemLoader(appPath+"/object_templates/"))
     
     #COREWIZARD NAGIOS FILE TEMPLATE TO PROCESS
     tempj2 = "object_template.j2"
@@ -200,7 +200,7 @@ if __name__ == "__main__" :
             #GUARD
             else:
                 #TODO NAGIOS OBJECT PATH FROM YML
-                tpath = "{}\\{}.cfg".format(appPath,template)
+                tpath = "{}/{}.cfg".format(appPath,template)
                 
                 #CHECK FILE EXISTS
                 if os.path.exists(tpath):
@@ -230,7 +230,7 @@ if __name__ == "__main__" :
             else:
                 
                 #TODO NAGIOS OBJECT PATH FROM YML
-                tpath = "{}\\{}.cfg".format(appPath,template)
+                tpath = "{}/{}.cfg".format(appPath,template)
                 
                 #CHECK FILE EXISTS
                 if os.path.exists(tpath):
@@ -263,7 +263,7 @@ if __name__ == "__main__" :
             else:
                 
                 #THIS WILL BE NAGIOS WORKING DIRECTORY
-                cfgpath = "{}\\{}.cfg".format(appPath,nhd[0])
+                cfgpath = "{}/{}.cfg".format(appPath,nhd[0])
                 
                 if os.path.exists(cfgpath):
                     print("SKIPPED: \"{}\" File Exists.".format(cfgpath))
