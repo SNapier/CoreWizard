@@ -150,16 +150,24 @@ The "monitor" action, takes the input provices by the user in the hostlist and b
 
 #### CoreWizard Object Content
 
-<hostname>.cfg
+\<hostname\>.cfg
 
 Object will contain a single host stanza.
 <table>
   <th>Field</th><th>Value</th>
   <tr>
     <td>host_name</td><td>user-input</td>
+  </tr>
+  <tr>
     <td>address</td><td>user-input</td>
+  </tr>
+  <tr>
     <td>use</td><td>corewizard-generic-host-use</td>
+  </tr>  
+  <tr>  
     <td>command</td><td>yml-type-host-command</td>
+  </tr>  
+  <tr>  
     <td>hostgroups<td>yml-type-host-hostgroups</td></td>
   </tr>
 </table>
@@ -171,8 +179,14 @@ Object will caontain a stanza for each service that is defined for the type in t
   <th>name</th><th>yml-type-service(n)</th>
   <tr>
     <td>service_descrition</td><td>yml-type-service(n)-service_description</td>
+  </tr>   
+  <tr>  
     <td>command</td><td>yml-type-service(n)-command</td>
+  </tr>
+  <tr>
     <td>notifications_enabled</td><td>yml-type-service(n)-notifications_enabled</td>
+  </tr>
+  <tr>
     <td>action_url</td><td>yml-type-service(n)-action_url</td>
   </tr>
 </table>
