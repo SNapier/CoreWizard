@@ -86,6 +86,7 @@ The "cmd" action, short for generate corewizard commands, takes the object feild
   * corewizard-commands.j2 
 * File Generated
   * corewizard_commands.cfg
+
 #### Command File Content
 <table>
   <th>Name</th><th>Description</th>
@@ -112,7 +113,7 @@ The "cmd" action, short for generate corewizard commands, takes the object feild
   </tr>
 </table>
 
-### CoreWizard Templates
+### Generate CoreWizard Templates
 The "template" action, short for generate corewizard templates, takes the object feild values defined in the yml, passes this to the jinja2 template and creates the Nagios Core tewmplates that will be used by the hosts and services monitored.
 The corewizard templates contain the majority of the settings for the monitored objects generated via the corewizard and are inherited via the use feild in the monitored object cfg.
 
@@ -148,18 +149,31 @@ corewizard-generic-service.cfg
 The "monitor" action, takes the input provices by the user in the hostlist and based on the type, reads the object feild values defined in the yml, passes this to the jinja2 template and creates the Nagios Core object (<hostname>.cfg) containing the host and services defined in the object yml.
 
 #### CoreWizard Object Content
-HOST
+
+<hostname>.cfg
+
+Object will contain a single host stanza.
 <table>
   <th>Field</th><th>Value</th>
   <tr>
-    <td>name</td><td>value</td>
+    <td>host_name</td><td>user-input</td>
+    <td>address</td><td>user-input</td>
+    <td>use</td><td>corewizard-generic-host-use</td>
+    <td>command</td><td>yml-type-host-command</td>
+    <td>hostgroups<td>yml-type-host-hostgroups</td></td>
   </tr>
 </table>
 
+Object will caontain a stanza for each service that is defined for the type in the corewizard_object.yml 
+
 (n)SERVICE
 <table>
-  <th>Field</th><th>Value</th>
+  <th>name</th><th>yml-type-service(n)</th>
   <tr>
-    <td>name</td><td>value</td>
+    <td>service_descrition</td><td>yml-type-service(n)-service_description</td>
+    <td>command</td><td>yml-type-service(n)-command</td>
+    <td>notifications_enabled</td><td>yml-type-service(n)-notifications_enabled</td>
+    <td>action_url</td><td>yml-type-service(n)-action_url</td>
   </tr>
 </table>
+
