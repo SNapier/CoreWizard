@@ -1,5 +1,6 @@
 import os, sys, argparse, yaml
 from jinja2 import Environment, FileSystemLoader
+
 '''
 NAGIOS CORE MONITORING WIZARD
 GENERATE NAGIOS CORE OBJECT CONFIGURATIONS FOR LINUX NCPA AGENT
@@ -12,7 +13,7 @@ USER-Count
 '''
 
 cname = "corewizard"
-cversion = "0.0.3"
+cversion = "0.0.4"
 appPath = os.path.dirname(os.path.realpath(__file__))
 
 #GENERATE COREWIZARD TEMPLATES
@@ -36,6 +37,10 @@ def generateNagiosTemplate(appPath,template):
     with open(tyml, 'r') as f:
         data_loaded = yaml.safe_load(f)
         tempdata = data_loaded[0]["template"]
+
+    
+    #VERSIONING
+    tempdata["version"] = cversion
 
     #RENDER TEMPLATE
     rendered = temp.render(tempdata)
@@ -74,6 +79,9 @@ def generateNagiosCommands(appPath,template):
         data_loaded = yaml.safe_load(f)
         tempdata = data_loaded[0]["commands"]        
         commands["cmd"] = tempdata
+
+    #VERSIONING
+    commands["version"] = cversion
 
     #RENDER TEMPLATE
     rendered = temp.render(commands)
@@ -126,6 +134,9 @@ def generateNagiosCfg(appPath,meta,nhd):
         for service in data_loaded[0][meta.ostype.lower()]["services"]:
             cfg["services"][service] = data_loaded[0][meta.ostype.lower()]["services"][service]
     
+    #VERSIONING
+    cfg["version"] = cversion
+
     #RENDER TEMPLATE
     rendered = temp.render(cfg)
 
