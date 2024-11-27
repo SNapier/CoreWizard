@@ -1,19 +1,8 @@
 import os, sys, argparse, yaml
 from jinja2 import Environment, FileSystemLoader
 
-'''
-NAGIOS CORE MONITORING WIZARD
-GENERATE NAGIOS CORE OBJECT CONFIGURATIONS FOR LINUX NCPA AGENT
-CPU-Utilization
-DISK-Utilization
-MEMORY-Utilization
-PROCESS-Count
-USER-Count
-
-'''
-
 cname = "corewizard"
-cversion = "0.0.4"
+cversion = "0.0.5"
 appPath = os.path.dirname(os.path.realpath(__file__))
 
 #GENERATE COREWIZARD TEMPLATES
@@ -37,7 +26,6 @@ def generateNagiosTemplate(appPath,template):
     with open(tyml, 'r') as f:
         data_loaded = yaml.safe_load(f)
         tempdata = data_loaded[0]["template"]
-
     
     #VERSIONING
     tempdata["version"] = cversion
@@ -85,6 +73,7 @@ def generateNagiosCommands(appPath,template):
 
     #RENDER TEMPLATE
     rendered = temp.render(commands)
+    
     #NAGFILE
     nagfile = "{}.cfg".format(template)
 
@@ -95,7 +84,7 @@ def generateNagiosCommands(appPath,template):
         f.close()
 
 #GENERATE NAGIOS OBJECT CONFIGS
-def generateNagiosCfg(appPath,meta,nhd):
+def generateNagiosCfg(appPath,type,nhd):
     
     #CORWIZARD OBJECTS TEMPLATE
     tyml = "{}/object_yml/corewizard-objects.yml".format(appPath)
@@ -127,12 +116,12 @@ def generateNagiosCfg(appPath,meta,nhd):
         data_loaded = yaml.safe_load(f)
 
         #GET REQUIRED FIELDS FROM YML
-        for item in data_loaded[0][meta.ostype.lower()]["host"]:
-            cfg["host"][item] = data_loaded[0][meta.ostype.lower()]["host"][item]
+        for item in data_loaded[0][type]["host"]:
+            cfg["host"][item] = data_loaded[0][type]["host"][item]
         
         #GET ALL LINUX SERVICES DEFINED FOR THE TYPE IN THE YML
-        for service in data_loaded[0][meta.ostype.lower()]["services"]:
-            cfg["services"][service] = data_loaded[0][meta.ostype.lower()]["services"][service]
+        for service in data_loaded[0][type]["services"]:
+            cfg["services"][service] = data_loaded[0][type]["services"][service]
     
     #VERSIONING
     cfg["version"] = cversion
@@ -188,7 +177,7 @@ if __name__ == "__main__" :
     #GIVE 5 INPUT
     meta = args.parse_args()
     
-    #TODO ADD NAGIOS WIZARD YAML
+    #TODO ADD COREWIZARD YAML
     #NAGIOS USER
     #NAGIOS GROUP
     #NAGIOS OBJECTS PATH
@@ -268,7 +257,7 @@ if __name__ == "__main__" :
             # CLOBBER
             if meta.overwrite:
                 print("OVERWRITING {}.cfg ".format(nhd[0]))
-                generateNagiosCfg(appPath,meta,nhd)
+                generateNagiosCfg(appPath,meta.ostype.lower(),nhd)
             
             #GUARD
             else:
@@ -280,7 +269,7 @@ if __name__ == "__main__" :
                     print("SKIPPED: \"{}\" File Exists.".format(cfgpath))
                 else:
                     print("GENERATING {}.cfg".format(nhd[0]))
-                    generateNagiosCfg(appPath,meta,nhd)
+                    generateNagiosCfg(appPath,meta.ostype.lower(),nhd)
     
     #UNKNOWN COMMAND
     else:

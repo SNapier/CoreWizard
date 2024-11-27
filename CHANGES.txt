@@ -1,0 +1,6 @@
+V: 0.0.5
+Added changes.txt
+Fixed the formatting of the core_wizard commands title block to align ending pound sign.
+Settled on the check_ncpa command for default and populated the linux and windows ncpa commands in corewizard-objects.yml
+Modified the formatting of the readme.md file
+Added the template contents to the readme.md file

@@ -131,18 +131,53 @@ The corewizard templates contain the majority of the settings for the monitored 
 
 corewizard-generic-host.cfg
 <table>
-  <th>Field</th><th>Value</th>
-  <tr>
-    <td>name</td><td>value</td>
-  </tr>
+    <th>Field</th><th>Value</th>
+    <tr><td>name</td><td>corewizard-generic-host</td></tr> 
+    <tr><td>check_period</td><td>24x7</td></tr>                    
+    <tr><td>check_interval</td><td>4</td></tr>                       
+    <tr><td>retry_interval</td><td>2</td></tr>                       
+    <tr><td>max_check_attempts</td><td>4</td></tr>        
+    <tr><td>notification_period</td><td>24x7</td></tr>
+    <tr><td>notification_interval</td><td>60</td></tr>                     
+    <tr><td>notification_options</td><td>u,d,r</td></tr>                   
+    <tr><td>contact_groups`</td><td>admins</td></tr>                   
+    <tr><td>notifications_enabled</td><td>1</td></tr>                       
+    <tr><td>event_handler_enabled</td><td>1</td></tr>                       
+    <tr><td>flap_detection_enabled</td><td>0</td></tr>                       
+    <tr><td>process_perf_data</td><td>1</td></tr>                        
+    <tr><td>retain_status_information</td><td>1</td></tr>                        
+    <tr><td>retain_nonstatus_information</td><td>1</td></tr>                        
+    <tr><td>notification_period</td><td>24x7</td></tr>                    
+    <tr><td>register</td><td>0</td></tr> 
 </table>
 
 corewizard-generic-service.cfg
 <table>
   <th>Field</th><th>Value</th>
-  <tr>
-    <td>name</td><td>value</td>
-  </tr>
+  <tr><td>name</td><td>corewizard-generic-service</td></tr>
+  <tr><td>active_checks_enabled</td><td>1</td></tr>
+  <tr><td>passive_checks_enabled</td><td>1</td></tr>
+  <tr><td>parallelize_check </td><td>1</td></tr>
+  <tr><td>obsess_over_service</td><td>0</td></tr>
+  <tr><td>check_freshness</td><td>0</td></tr>
+  <tr><td>notifications_enabled </td><td>1</td></tr>
+  <tr><td>event_handler_enabled </td><td>1</td></tr>
+  <tr><td>flap_detection_enabled</td><td>1</td></tr>
+  <tr><td>process_perf_data </td><td>1</td></tr>
+  <tr><td>retain_status_information </td><td>1</td></tr>
+  <tr><td>retain_nonstatus_information</td><td>1</td></tr>
+  <tr><td>is_volatile</td><td>0</td></tr>
+  <tr><td>check_period</td><td>24x7</td></tr>
+  <tr><td>max_check_attempts</td><td>4</td></tr>
+  <tr><td>check_interval</td><td>4</td></tr>
+  <tr><td>retry_interval</td><td>2</td></tr>
+  <tr><td>contact_groups</td><td>admins</td></tr>
+  <tr><td>notification_options</td><td>w,u,c,r</td></tr>
+  <tr><td>notification_interval</td><td>60</td></tr>
+  <tr><td>notification_period</td><td>24x7</td></tr>
+  <tr><td>register</td><td>0</td></tr>
+  <tr><td>notes</td><td>corewizard generated</td></tr>
+  <tr><td>_wizard</td><td>corewizard</td></tr>
 </table>
 
 ### Corewizard Objects
@@ -155,21 +190,11 @@ The "monitor" action, takes the input provices by the user in the hostlist and b
 Object will contain a single host stanza.
 <table>
   <th>Field</th><th>Value</th>
-  <tr>
-    <td>host_name</td><td>user-input</td>
-  </tr>
-  <tr>
-    <td>address</td><td>user-input</td>
-  </tr>
-  <tr>
-    <td>use</td><td>corewizard-generic-host-use</td>
-  </tr>  
-  <tr>  
-    <td>command</td><td>yml-type-host-command</td>
-  </tr>  
-  <tr>  
-    <td>hostgroups<td>yml-type-host-hostgroups</td></td>
-  </tr>
+  <tr><td>host_name</td><td>user-input</td></tr>
+  <tr><td>address</td><td>user-input</td></tr>
+  <tr><td>use</td><td>corewizard-generic-host-use</td></tr>  
+  <tr><td>command</td><td>yml-type-host-command</td></tr>  
+  <tr><td>hostgroups<td>yml-type-host-hostgroups</td></td></tr>
 </table>
 
 Object will caontain a stanza for each service that is defined for the type in the corewizard_object.yml 
@@ -177,17 +202,9 @@ Object will caontain a stanza for each service that is defined for the type in t
 (n)SERVICE
 <table>
   <th>name</th><th>yml-type-service(n)</th>
-  <tr>
-    <td>service_descrition</td><td>yml-type-service(n)-service_description</td>
-  </tr>   
-  <tr>  
-    <td>command</td><td>yml-type-service(n)-command</td>
-  </tr>
-  <tr>
-    <td>notifications_enabled</td><td>yml-type-service(n)-notifications_enabled</td>
-  </tr>
-  <tr>
-    <td>action_url</td><td>yml-type-service(n)-action_url</td>
-  </tr>
+  <tr><td>service_descrition</td><td>yml-type-service(n)-service_description</td></tr>   
+  <tr><td>command</td><td>yml-type-service(n)-command</td></tr>
+  <tr><td>notifications_enabled</td><td>yml-type-service(n)-notifications_enabled</td></tr>
+  <tr><td>action_url</td><td>yml-type-service(n)-action_url</td></tr>
 </table>
 
