@@ -9,52 +9,68 @@
     services:
       cpu:
         service_description: CPU Utilization
-        command: 'check_ncpa ! "-t <token> -P 5693 -M 'cpu/percent' -w 80 -c 90"!!!!!!!!'
+        command: "check_ncpa ! -t mytoken -P 5693 -M 'cpu/percent' -w 80 -c 90!!!!!!!!"
         notifications_enabled: 1
         action_url: 'http://localhost:9090/classic/graph?g0.range_input=1h&g0.expr=$HOSTNAME$_cpu_utilization&g0.tab=0'
 
       mem:
         service_description: Memory Utilization
-        command: 'check_ncpa <service string>!<arg1>!<arg2>!<arg3>!<srg4>!<arg5>!<arg7>!<arg8>!'
+        command: "check_ncpa ! -t mytoken -P 5693 -M 'mem/virtual' -w 80 -c 90!!!!!!!!"
         notifications_enabled: 1
         action_url: 'http://localhost:9090/classic/graph?g0.range_input=1h&g0.expr=$HOSTNAME$_memory_utilization&g0.tab=0'
 
       disk:
-        service_description: Disk Usage /
-        command: 'check_ncpa <service string>!<arg1>!<arg2>!<arg3>!<srg4>!<arg5>!<arg7>!<arg8>!'
+        service_description: Disk Usage |
+        command: "check_ncpa ! -t mytoken -P 5693 -M 'disk/logical/|' -w 80 -c 90!!!!!!!!"
         notifications_enabled: 1
         action_url: 'http://localhost:9090/classic/graph?g0.range_input=1h&g0.expr=$HOSTNAME$_disk_usage&g0.tab=0'
 
-      proc:
+      procs:
         service_description: Total Processes
-        command: 'check_ncpa <service string>!<arg1>!<arg2>!<arg3>!<srg4>!<arg5>!<arg7>!<arg8>!'
+        command: "check_ncpa ! -t mytoken -M 'processes' -w 30 -c 35 -q 'match=search'!!!!!!!!"
         notifications_enabled: 1
         action_url: 'http://localhost:9090/classic/graph?g0.range_input=1h&g0.expr=$HOSTNAME$_total_processes&g0.tab=0'
 
+      ncpa:
+        service_description: NCPA
+        command: "check_ncpa ! -t mytoken -M 'services' -q 'service=ncpa,status=running,match=search'!!!!!!!!"
+        notifications_enabled: 1
+        action_url: 
+
       user:
         service_description: User Count
-        command: 'check_ncpa <service string>!<arg1>!<arg2>!<arg3>!<srg4>!<arg5>!<arg7>!<arg8>!'
+        command: "check_ncpa !-t mytoken -M 'user/count' -w 2 -c 3!!!!!!!"
         notifications_enabled: 1
         action_url: 'http://localhost:9090/classic/graph?g0.range_input=1h&g0.expr=$HOSTNAME$_user_count&g0.tab=0'
+
 - windows:
     host:
       hostgroups: windows-servers
       check_command: check_host_alive
       notifications_enabled: 1
       action_url: action_url   
+    
     services:
       cpu:
         service_description: CPU Utilization
-        command: 'check_ncpa ! "-t <token> -P 5693 -M 'cpu/percent' -w 80 -c 90"!!!!!!!!'
+        command: "check_ncpa ! -t mytoken -P 5693 -M 'cpu/percent' -w 80 -c 90!!!!!!!!"
         notifications_enabled: 1
         action_url: 'http://localhost:9090/classic/graph?g0.range_input=1h&g0.expr=$HOSTNAME$_cpu_utilization&g0.tab=0'
+
       mem:
         service_description: Memory Utilization
-        command: 'check_ncpa <service string>!<arg1>!<arg2>!<arg3>!<srg4>!<arg5>!<arg7>!<arg8>!'
+        command: "check_ncpa ! -t mytoken -P 5693 -M 'mem/virtual' -w 80 -c 90!!!!!!!!"
         notifications_enabled: 1
         action_url: 'http://localhost:9090/classic/graph?g0.range_input=1h&g0.expr=$HOSTNAME$_memory_utilization&g0.tab=0'
+      
       disk:
         service_description: Disk Usage C
-        command: 'check_ncpa <service string>!<arg1>!<arg2>!<arg3>!<srg4>!<arg5>!<arg7>!<arg8>!'
+        command: "check_ncpa ! -t mytoken -P 5693 -M 'disk/logical/C' -w 80 -c 90!!!!!!!!"
         notifications_enabled: 1
         action_url: 'http://localhost:9090/classic/graph?g0.range_input=1h&g0.expr=$HOSTNAME$_disk_usage&g0.tab=0'
+      
+      ncpa:
+        service_description: NCPA
+        command: "check_ncpa ! -t mytoken -M 'services' -q 'service=ncpa,status=running,match=search'!!!!!!!!"
+        notifications_enabled: 1
+        action_url:
