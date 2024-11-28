@@ -1,10 +1,10 @@
 - commands:
     check_ncpa:
       command_name: check_ncpa
-      command_line: $USER1$/check_ncpa.py -H $HOSTADDRESS$ $ARG1$
+      command_line: python3 $USER1$/check_ncpa.py -H $HOSTADDRESS$ $ARG1$
     check_ncpa_core:
       command_name: check_ncpa_core
-      command_line: $USER1$/check_ncpa.py -H $HOSTADDRESS$ -t $USER99$ -P $USER100$ -M $ARG1$ -w $ARG2$ -c $ARG3$
+      command_line: python3 $USER1$/check_ncpa.py -H $HOSTADDRESS$ -t $USER99$ -P $USER100$ -M $ARG1$ -w $ARG2$ -c $ARG3$
     check_ncpa_hyperv:
       command_name: check_ncpa_core_hyperv
-      command_line: $USER1$/check_ncpa.py -H $HOSTADDRESS$ -t $_HOSTNCPA_TOKEN$ -P $_HOSTNCPA_PORT$ -M $ARG1$ -w $ARG2$ -c $ARG3$
+      command_line: python3 $USER1$/check_ncpa.py -H $HOSTADDRESS$ -t $_HOSTNCPA_TOKEN$ -P $_HOSTNCPA_PORT$ -M $ARG1$ -w $ARG2$ -c $ARG3$
