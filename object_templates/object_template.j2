@@ -16,9 +16,10 @@ define  host{
 #BEGIN NCPA SERVICE/S DEFINITION
 {% for service in services %}    
     define service {
+        host_name           {{ host.host_name }}
         use                 corewizard-generic-service
         description         {{ services[service].service_description }}
-        command             {{ services[service].command }}
+        check_command       {{ services[service].command }}
         action_url          {{ services[service].action_url }}
     }
 
