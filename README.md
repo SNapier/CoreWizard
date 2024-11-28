@@ -20,7 +20,7 @@ Python to create the commands, templates and Nagios Core object config files nee
    * jinja2
    
 4. Modify ```/usr/local/nagios/etc/nagios.cfg``` to include CoreWizard generated object configs.
-  * Add CoreWizard path to the read configs from directory section
+    * Add CoreWizard path to the read configs from directory section
 5. Execute "python3 corewizard -a cmd" to reate corewizard commands.
 6. Execute "python3 corewizard.py -a templates"
 7. Execute "python3 corewizard.py -a monitor -H "<host_name>:<ip/fqdn> -T <linux/windows>"
