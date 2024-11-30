@@ -5,23 +5,37 @@
 
 #HOST DEFINITION
 define  host{
+    {% if host.action_url is defined %}
     use             corewizard-generic-host
     host_name       {{ host.host_name }}
     address         {{ host.address }}
     check_command   {{ host.check_command }}
     hostgroups      {{ host.hostgroups }}
     action_url      {{ host.action_url }}
+    {% else %}
+    use             corewizard-generic-host
+    host_name       {{ host.host_name }}
+    address         {{ host.address }}
+    check_command   {{ host.check_command }}
+    hostgroups      {{ host.hostgroups }}
+    {% endif %}
 }
 
 #BEGIN NCPA SERVICE/S DEFINITION
 {% for service in services %}    
     define service {
+        {% if services[service].action_url is defined %}
         host_name           {{ host.host_name }}
         use                 corewizard-generic-service
         description         {{ services[service].service_description }}
         check_command       {{ services[service].command }}
         action_url          {{ services[service].action_url }}
+        {% else %}
+        host_name           {{ host.host_name }}
+        use                 corewizard-generic-service
+        description         {{ services[service].service_description }}
+        check_command       {{ services[service].command }}
+        {% endif %}
     }
-
 {% endfor %}
 #END NCPA SERVICE/S DEFINITIONS
