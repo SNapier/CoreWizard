@@ -2,7 +2,7 @@ import os, sys, argparse, yaml
 from jinja2 import Environment, FileSystemLoader
 
 cname = "corewizard"
-cversion = "0.0.5"
+cversion = "0.0.6"
 appPath = os.path.dirname(os.path.realpath(__file__))
 
 #GENERATE COREWIZARD TEMPLATES
