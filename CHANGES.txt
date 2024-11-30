@@ -1,3 +1,6 @@
+V: 0.0.6
+Modified template to determine if action_url is set in the yml
+
 V: 0.0.5
 Added changes.txt
 Fixed the formatting of the core_wizard commands title block to align ending pound sign.
